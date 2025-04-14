@@ -5,7 +5,6 @@
 <div [hidden]="hideRooms">
     Number of Rooms:
     <div [ngStyle]="{color:rooms.availableRooms>0? 'yellow' : 'green'}" [innerText]="numberOfRooms"></div>
-
 </div>
 
 <button (click)="toggle()">Toogle</button>
@@ -18,7 +17,7 @@
     <button (click)="addRoom()">Add Room</button>
 </div>
 <!-- {{roomList| json}} -->
-<div *ngIf="rooms.availableRooms>0">
+<div *ngIf="hideRooms">
     {{rooms.availableRooms}}
     <hinv-rooms-list [rooms]="roomList"
     [title]="title"
