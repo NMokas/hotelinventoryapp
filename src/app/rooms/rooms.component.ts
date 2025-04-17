@@ -1,6 +1,7 @@
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
 import { HeaderComponent } from '../header/header.component';
+import { RoomsService } from './services/rooms.service';
 
 @Component({
   selector: 'hinv-rooms',
@@ -25,7 +26,10 @@ export class RoomsComponent implements OnInit, AfterViewInit, AfterViewChecked{
   };
 
   roomList:RoomList[]=[]
-  constructor(){}
+
+  // roomService=new RoomsService();
+
+  constructor(private roomsService:RoomsService){}
 
   
 
@@ -50,39 +54,7 @@ export class RoomsComponent implements OnInit, AfterViewInit, AfterViewChecked{
 
   ngOnInit():void{
     console.log(this.headerComponent) 
-    this.roomList=[
-      {
-        roomType:'Deluxe',
-        amenities:'Air fryer',
-        price:10,
-        photos:'N/A',
-        checkinTime: new Date('17-Jun-1999'),
-        checkoutTime: new Date('05-Jul-2000'),
-        roomNumber:1,
-        rating:4.5
-      },
-      {
-        roomType:'Private',
-        amenities:'Air fryer',
-        price:9,
-        photos:'N/A',
-        checkinTime: new Date('11-Nov-1999'),
-        checkoutTime: new Date('24-Jul-2000'),
-        roomNumber:2,
-        rating:3.55
-      },
-      {
-        roomType:'Deluxe',
-        amenities:'Air fryer',
-        price:12,
-        photos:'N/A',
-        checkinTime: new Date('18-Dec-2001'),
-        checkoutTime: new Date('24-Jul-2004'),
-        roomNumber:3,
-        rating:2.47
-    
-      }
-    ]
+    this.roomList=this.roomsService.getRooms();
    }
 
   toggle(){
