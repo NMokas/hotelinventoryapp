@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
@@ -29,7 +29,7 @@ export class RoomsComponent implements OnInit, AfterViewInit, AfterViewChecked{
 
   // roomService=new RoomsService();
 
-  constructor(private roomsService:RoomsService){}
+  constructor(@SkipSelf() private roomsService:RoomsService){}
 
   
 
@@ -53,9 +53,12 @@ export class RoomsComponent implements OnInit, AfterViewInit, AfterViewChecked{
   
 
   ngOnInit():void{
-    console.log(this.headerComponent) 
-    this.roomList=this.roomsService.getRooms();
-   }
+    this.roomsService.getRooms().subscribe(
+      rooms=>{
+        this.roomList=rooms;
+      }
+    );
+  }
 
   toggle(){
     this.hideRooms=!this.hideRooms;
@@ -69,7 +72,7 @@ export class RoomsComponent implements OnInit, AfterViewInit, AfterViewChecked{
 
   addRoom(){
     const room:RoomList={
-      roomNumber:4,
+      roomNumber:'4',
       roomType:'Deluxe Room',
       amenities:'Oven',
       price:20,
